@@ -1,0 +1,50 @@
+{
+    "posts" : [
+        {
+            "title": "Ability to follow others",
+            "description": "Stay updated on comments and solutions other people post",
+            "tag": "feature"
+        },
+        {
+            "title": "Preview images not loading",
+            "description": "Challenge preview images are missing when you apply a filter",
+            "tag": "bug"
+        },
+        {
+            "title": "Add a dark theme option",
+            "description": "It would help people with light sensitivities and who prefer dark mode",
+            "tag": "feature"
+        },
+        {
+            "title": "Add tags for solutions",
+            "description": "Easier to search for solutions based on a specific stack",
+            "tag": "enhancement" 
+        },
+        {
+            "title": "Q&A within the challende hubs",
+            "description": "Challenge-specific Q&A would make for easy reference",
+            "tag": "feature"
+        },
+        {
+            "title": "Allow image/video upload",
+            "description": "Images and screencasts can enhance comments on solutions",
+            "tag": "enhancement"
+        }
+    ],
+    "users": [
+        {
+            "username": "bencarhb",
+            "password":"benjamin",
+            "name":"Benjamin",
+            "lastname": "Honorio",
+            "email": "benjaminhonorio.12@gmail.com"
+        },
+        {
+            "username": "suyeliza",
+            "password":"locaza",
+            "name":"Susy",
+            "lastname": "Rodriguez",
+            "email": "suyeliza@gmail.com"
+        }
+    ]
+}

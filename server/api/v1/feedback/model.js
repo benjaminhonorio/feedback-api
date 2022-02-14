@@ -1,0 +1,85 @@
+const mongoose = require('mongoose')
+const config = require('../../../config')
+
+const modelFields = {
+  title: {
+    type: String,
+    required: true,
+    maxLength: 75,
+    minLength: 15,
+    trim: true
+  },
+  description: {
+    type: String,
+    required: true,
+    maxLength: 125,
+    minLength: 15,
+    trim: true
+  },
+  upvotes: {
+    type: Number,
+    default: 1,
+    min: 0
+  },
+  status: {
+    type: String,
+    enum: config.STATUS_OPTIONS
+  },
+  hidden: {
+    type: Boolean,
+    default: false
+  },
+  tag: {
+    type: String,
+    required: true,
+    enum: config.TAGS_OPTIONS
+  }
+
+}
+
+const references = {
+  // comments: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Comment'
+  //   }
+  // ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
+}
+
+const feedbackSchema = new mongoose.Schema({ ...modelFields, ...references }, { timestamps: true })
+
+// Middlewares
+
+// feedbackSchema.pre("save", async function() {
+// // do stuff
+// })
+
+// Custom Instance methods
+
+feedbackSchema.methods.toggleHide = function () {
+  this.hidden = !this.hidden
+  return this.save() // returns a thenable similar to a promise
+}
+
+feedbackSchema.methods.setStatus = function (status) {
+  this.status = status
+  return this.save()
+}
+
+// Custom toJSON method
+
+feedbackSchema.set('toJSON', {
+  transform: (doc, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
+const Model = mongoose.model('Feedback', feedbackSchema)
+
+module.exports = { Model, modelFields, references }

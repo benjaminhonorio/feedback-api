@@ -1,0 +1,50 @@
+name: Deploy backend
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+        mongodb-version: ['4.4']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Start MongoDB ${{ matrix.mongodb-version }}
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+      
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Eslint check
+        run: npm run lint
+
+      - name: Run Tests
+        run: npm test
+
+        env:
+          CI: true
+
+      - name: Deploy to Heroku
+        if: github.ref == 'refs/heads/main'
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "intense-river-18655"
+          heroku_email: "benjaminhonorio.12@gmail.com"

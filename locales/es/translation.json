@@ -1,0 +1,15 @@
+{
+    "feedback_creation_success" : "Retroalimentación creada con éxito",
+    "feedback_deletion_success" : "Retroalimentación eliminada con éxito",
+    "feedback_update_success": "Retroalimentación actualizada con éxito",
+    "user_signup_success": "Bienvenido, tu cuenta se creó correctamente",
+    "user_login_success" : "Bienvenido de nuevo",
+    "user_login_failure": "Tu usuario o contraseña no son correctos. Intenta nuevamente",
+    "missing_or_invalid_token": "El token no existe o es inválido",
+    "invalid_token": "El token es inválido",
+    "expired_token": "El token ha expirado. Por favor inicia sesión nuevamente",
+    "error_malformatted_id": "id mal formado",
+    "user_not_found": "El usuario no existe",
+    "not_allowed_user": "El usuario no está autorizado",
+    "feedback_not_found": "No se encontró la retroalimentación"
+}
