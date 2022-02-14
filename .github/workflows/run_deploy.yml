@@ -36,7 +36,7 @@ jobs:
         run: npm run lint
 
       - name: Run Tests
-        run: npm test
+        run: TEST_MONGODB_URI='mongodb://localhost:27017/feedback-app-test' npm test
 
         env:
           CI: true
