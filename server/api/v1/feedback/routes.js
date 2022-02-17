@@ -11,6 +11,6 @@ router.route('/:id')
   .put(tokenExtractor, userExtractor, controller.update)
   .delete(tokenExtractor, userExtractor, controller.delete)
 
-router.route('/:id/upvote').put(tokenExtractor, controller.upvote)
+router.route('/:id/upvote').put(controller.upvote) // removed tokenExtractor since it wasnt been used
 
 module.exports = router
