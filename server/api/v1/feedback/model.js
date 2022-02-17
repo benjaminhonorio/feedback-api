@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 const config = require('../../../config')
 
+// To prevent returning all documents when filters are not part of the schema, instead return empty array
+// https://mongoosejs.com/docs/guide.html#strictQuery
+// mongoose.set('strictQuery', false)
+
 const modelFields = {
   title: {
     type: String,
@@ -23,6 +27,7 @@ const modelFields = {
   },
   status: {
     type: String,
+    default: '',
     enum: config.STATUS_OPTIONS
   },
   hidden: {
@@ -51,7 +56,6 @@ const references = {
 }
 
 const feedbackSchema = new mongoose.Schema({ ...modelFields, ...references }, { timestamps: true })
-
 // Middlewares
 
 // feedbackSchema.pre("save", async function() {

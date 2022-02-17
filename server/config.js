@@ -6,12 +6,12 @@ module.exports = {
     : process.env.MONGODB_URI,
   PORT: process.env.PORT || 3000,
   TAGS_OPTIONS: ['ui', 'ux', 'enhancement', 'bug', 'feature'],
-  STATUS_OPTIONS: ['planned', 'in progress', 'live'],
+  STATUS_OPTIONS: ['', 'planned', 'in progress', 'live'],
   INTERNATIONALIZATION: {
     fallbackLng: 'en',
     localesPathname: './locales/{{lng}}/translation.json'
   },
-  FILTER_OPTIONS: ['tag', 'role'], // feedback and users
+  FILTER_OPTIONS: ['tag', 'admin', 'status'], // feedback and users
   SORT_OPTIONS: {
     sortBy: {
       fields: ['createdAt', 'updatedAt'],
