@@ -1,4 +1,4 @@
-const { FILTER_OPTIONS, SORT_OPTIONS, PAGINATION_OPTIONS } = require('../server/config')
+const { SORT_OPTIONS, PAGINATION_OPTIONS } = require('../server/config')
 
 exports.capitalizeFirstLetter = (v) => {
   // Convert 'bob' -> 'Bob'
@@ -44,20 +44,9 @@ exports.getSortingParams = (
 }
 
 exports.getFilters = (fields) => {
-  // Filter query params to valid filter options
-  // We could also destructure directly like {tag} instead of fields
-  // But this way we can change filter options without touching the code
-  // only by adding config as ENV variables for example
-
-  const queryFields = Object.getOwnPropertyNames(fields)
-  const curatedQueryFields = queryFields.filter(field =>
-    FILTER_OPTIONS.includes(field)
-  )
-  if (!curatedQueryFields) return {}
-
-  const filters = curatedQueryFields.reduce((acc, field) => {
-    acc[field] = fields[field].toLowerCase()
-    return acc
-  }, {})
-  return filters
+  // const inputFields = Object.keys(fields)
+  // console.log(inputFields)
+  // const isNotSortOption = inputFields.filter(field => field !== 'sortBy' || field !== 'direction')
+  // if (isNotSortOption.length) return {}
+  return fields
 }
