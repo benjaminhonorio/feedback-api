@@ -65,3 +65,18 @@ exports.userExtractor = async (req, res, next) => {
   }
   next()
 }
+
+exports.checkIfUserIsAdmin = async (req, res, next) => {
+  let token = req.get('authorization')
+  if (token && token.toLowerCase().startsWith('bearer ')) {
+    token = token.substring(7)
+    const { id } = jwt.verify(token, config.TOKEN_SECRET)
+    const user = await User.findById({ _id: id })
+    if (user.admin) {
+      req.userIsAdmin = true
+      return next()
+    }
+  }
+  req.userIsAdmin = false
+  next()
+}

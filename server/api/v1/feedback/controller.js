@@ -15,13 +15,14 @@ exports.all = async (req, res, next) => {
 }
 
 exports.read = async (req, res, next) => {
+  const { userIsAdmin = false } = req
   const { id } = req.params
   const data = await Model.findById(id).populate(references.join(' '), { username: 1, name: 1 })
   if (!data) {
     const message = req.t('feedback_not_found')
     return res.status(404).json({ message })
   }
-  res.json({ data })
+  res.json({ data, user: { admin: userIsAdmin } })
 }
 
 exports.create = async (req, res, next) => {
