@@ -6,7 +6,7 @@ module.exports = {
     : process.env.MONGODB_URI,
   PORT: process.env.PORT || 3000,
   TAGS_OPTIONS: ['ui', 'ux', 'enhancement', 'bug', 'feature'],
-  STATUS_OPTIONS: ['', 'planned', 'in progress', 'live'],
+  STATUS_OPTIONS: ['', 'planned', 'in-progress', 'live'],
   INTERNATIONALIZATION: {
     fallbackLng: 'en',
     localesPathname: './locales/{{lng}}/translation.json'
