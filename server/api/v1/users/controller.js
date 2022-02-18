@@ -47,13 +47,17 @@ exports.login = async (req, res, next) => {
     const failure = req.t('user_login_failure')
     return res.status(401).json({ message: failure })
   }
-  const dataForToken = {
-    username: user.username,
-    id: user._id
-  }
+  const {
+    username = '',
+    name = '',
+    lastname = '',
+    thumbnail = '',
+    _id: id
+  } = user
+  const dataForToken = { username, id }
   const token = jwt.sign(dataForToken, config.TOKEN_SECRET) //, { expiresIn: config.TOKEN_EXPIRATION }
 
-  res.status(200).json({ message: success, token, username: user.username, name: user.name })
+  res.status(200).json({ message: success, data: { token, username, name, lastname, thumbnail } })
 }
 
 // TODO

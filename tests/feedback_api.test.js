@@ -84,7 +84,7 @@ describe('addition of a new feedback submission by authenticated user', () => {
   })
   test('succeeds with valid data', async () => {
     const { body: { data } } = await api.get(USERS_ENDPOINT)
-    const { body: { token } } = await request
+    const { body: { data: { token } } } = await request
       .post(`${USERS_ENDPOINT}/login`, { username: data[0].username, password: 'locaza' })
     const newFeedback = {
       title: 'Add downvotes for submissions',
@@ -105,7 +105,7 @@ describe('addition of a new feedback submission by authenticated user', () => {
   })
   test('fails with status code 400 if data is invalid', async () => {
     const { body: { data } } = await api.get(USERS_ENDPOINT)
-    const { body: { token } } = await api
+    const { body: { data: { token } } } = await api
       .post(`${USERS_ENDPOINT}/login`)
       .send({ username: data[0].username, password: 'locaza' })
 
@@ -136,7 +136,7 @@ describe('deletion of a feedback submission by authenticated user', () => {
   })
   test('succeeds with status code 200 if id is valid and returns back the deleted submission', async () => {
     const { body: { data } } = await api.get(USERS_ENDPOINT)
-    const { body: { token } } = await request
+    const { body: { data: { token } } } = await request
       .post(`${USERS_ENDPOINT}/login`, { username: data[0].username, password: 'locaza' })
     const newFeedback = {
       title: 'Add downvotes for submissions',
@@ -169,7 +169,7 @@ describe('updating upvotes of a feedback submission by authenticated user', () =
   })
   test('via the upvote endpoint adds one upvote to the total', async () => {
     const { body: { data } } = await api.get(USERS_ENDPOINT)
-    const { body: { token } } = await request
+    const { body: { data: { token } } } = await request
       .post(`${USERS_ENDPOINT}/login`, { username: data[0].username, password: 'locaza' })
     const newFeedback = {
       title: 'Add downvotes for submissions',
@@ -187,7 +187,7 @@ describe('updating upvotes of a feedback submission by authenticated user', () =
   })
   test('via the update endpoint has no effect ', async () => {
     const { body: { data } } = await api.get(USERS_ENDPOINT)
-    const { body: { token } } = await request
+    const { body: { data: { token } } } = await request
       .post(`${USERS_ENDPOINT}/login`, { username: data[0].username, password: 'locaza' })
     const newFeedback = {
       title: 'Add downvotes for submissions',
