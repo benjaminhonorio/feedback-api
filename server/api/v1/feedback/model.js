@@ -39,16 +39,21 @@ const modelFields = {
     required: true,
     enum: config.TAGS_OPTIONS
   }
+  // commentsCount: {
+  //   type: Number,
+  //   default: 0,
+  //   min: 0
+  // }
 
 }
 
 const references = {
-  // comments: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Comment'
-  //   }
-  // ],
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -56,13 +61,6 @@ const references = {
 }
 
 const feedbackSchema = new mongoose.Schema({ ...modelFields, ...references }, { timestamps: true })
-// Middlewares
-
-// feedbackSchema.pre("save", async function() {
-// // do stuff
-// })
-
-// Custom Instance methods
 
 feedbackSchema.methods.toggleHide = function () {
   this.hidden = !this.hidden

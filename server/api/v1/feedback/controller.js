@@ -1,8 +1,6 @@
 const { getFilters, getSortingParams } = require('../../../../utils')
-const { Model, modelFields, references: referenceNames } = require('./model')
+const { Model, modelFields } = require('./model')
 const { Model: User } = require('../users/model')
-
-const references = Object.getOwnPropertyNames(referenceNames)
 
 exports.all = async (req, res, next) => {
   const filters = getFilters(req.query)
@@ -10,14 +8,17 @@ exports.all = async (req, res, next) => {
   const data = await Model
     .find(filters)
     .sort(sortingParams)
-    .populate(references.join(' '), { username: 1, name: 1 })
+    .populate('user', { username: 1, name: 1 })
+    .populate({ path: 'comments', populate: { path: 'user', select: 'username name lastname thumbnail' } })
   res.json({ data })
 }
 
 exports.read = async (req, res, next) => {
   const { userIsAdmin = false } = req
   const { id } = req.params
-  const data = await Model.findById(id).populate(references.join(' '), { username: 1, name: 1 })
+  const data = await Model.findById(id)
+    .populate('user', { username: 1, name: 1 })
+    .populate({ path: 'comments', populate: { path: 'user', select: 'username name lastname thumbnail' } })
   if (!data) {
     const message = req.t('feedback_not_found')
     return res.status(404).json({ message })

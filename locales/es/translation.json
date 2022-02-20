@@ -11,5 +11,7 @@
     "error_malformatted_id": "id mal formado",
     "user_not_found": "El usuario no existe",
     "not_allowed_user": "El usuario no está autorizado",
-    "feedback_not_found": "No se encontró la retroalimentación"
+    "feedback_not_found": "No se encontró la retroalimentación",
+    "comment_creation_success" : "Comentario creado exitosamente",
+    "comment_deletion_success" : "Comentario eliminado"
 }

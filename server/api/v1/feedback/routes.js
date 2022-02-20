@@ -1,6 +1,7 @@
 const { tokenExtractor, userExtractor, checkIfUserIsAdmin } = require('../../../middlewares')
 const router = require('express').Router()
 const controller = require('./controller')
+const commentRoutes = require('../comment/routes')
 
 router.route('/')
   .get(controller.all)
@@ -12,5 +13,7 @@ router.route('/:id')
   .delete(tokenExtractor, userExtractor, controller.delete)
 
 router.route('/:id/upvote').put(controller.upvote) // removed tokenExtractor since it wasnt been used
+
+router.use('/:feedbackId/comments', commentRoutes)
 
 module.exports = router

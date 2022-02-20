@@ -14,7 +14,7 @@ module.exports = {
   FILTER_OPTIONS: ['tag', 'admin', 'status'], // feedback and users
   SORT_OPTIONS: {
     sortBy: {
-      fields: ['createdAt', 'updatedAt'],
+      fields: ['createdAt', 'updatedAt', 'comments'], // well this doesn't work lol => https://stackoverflow.com/a/32070126/6118812 it behaves oddly
       default: 'createdAt'
     },
     direction: {

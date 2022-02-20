@@ -11,5 +11,7 @@
     "error_malformatted_id": "Malformatted id",
     "user_not_found": "User not found",
     "not_allowed_user": "User not authorized to do this action",
-    "feedback_not_found": "Feedback not found"
+    "feedback_not_found": "Feedback not found",
+    "comment_creation_success" : "Comment created successfully",
+    "comment_deletion_success" : "Comment deleted"
 }

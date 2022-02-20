@@ -56,7 +56,10 @@ const modelFields = {
   },
   passwordHash: {
     type: String
-  },
+  }
+}
+
+const references = {
   submissions: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -71,7 +74,7 @@ const modelFields = {
   ]
 }
 
-const userSchema = new mongoose.Schema(modelFields, { timestamps: true })
+const userSchema = new mongoose.Schema({ ...modelFields, ...references }, { timestamps: true })
 
 userSchema.methods.toggleOnline = function () {
   this.online = !this.online
