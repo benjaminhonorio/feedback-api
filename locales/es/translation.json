@@ -5,6 +5,7 @@
     "user_signup_success": "Bienvenido, tu cuenta se creó correctamente",
     "user_login_success" : "Bienvenido de nuevo",
     "user_login_failure": "Tu usuario o contraseña no son correctos. Intenta nuevamente",
+    "user_delete_success": "El usuario se eliminó correctamente",
     "missing_or_invalid_token": "El token no existe o es inválido",
     "invalid_token": "El token es inválido",
     "expired_token": "El token ha expirado. Por favor inicia sesión nuevamente",

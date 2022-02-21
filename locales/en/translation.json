@@ -5,6 +5,7 @@
     "user_signup_success": "User signed up successfully",
     "user_login_success" : "User logged in successfully",
     "user_login_failure": "Your username or password is incorrect",
+    "user_delete_success": "The user was deleted successfully",
     "missing_or_invalid_token": "Token is missing or invalid",
     "invalid_token": "Invalid token",
     "expired_token": "Token has expired. Please, login again.",

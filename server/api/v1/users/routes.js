@@ -6,6 +6,10 @@ router.route('/')
   .get(controller.all) // only admin=true,
   .post(controller.signup)
 
+if (process.env.NODE_ENV === 'test') {
+  router.route('/deleteTestUser').delete(controller.deleteTestUser)
+}
+
 router.route('/login')
   .post(controller.login)
 

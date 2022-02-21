@@ -1,6 +1,7 @@
 const { getFilters, getSortingParams } = require('../../../../utils')
 const { Model, modelFields } = require('./model')
 const { Model: User } = require('../users/model')
+const { Model: Comment } = require('../comment/model')
 
 exports.all = async (req, res, next) => {
   const filters = getFilters(req.query)
@@ -78,4 +79,11 @@ exports.upvote = async (req, res, next) => {
   const increaseUpvotes = { $inc: { upvotes: 1 } }
   const data = await Model.findOneAndUpdate({ _id: id }, increaseUpvotes, { new: true })
   res.json({ data })
+}
+
+exports.deleteFeedbackAndComments = async (req, res, next) => {
+  await Model.deleteMany({})
+  await Comment.deleteMany({})
+  await User.findOneAndUpdate({ username: 'bencarhb' }, { comments: [], submissions: [] })
+  res.status(200).json({ message: 'Test feedback deleted successfully' })
 }

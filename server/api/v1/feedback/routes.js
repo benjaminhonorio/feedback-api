@@ -7,6 +7,10 @@ router.route('/')
   .get(controller.all)
   .post(tokenExtractor, userExtractor, controller.create)
 
+if (process.env.NODE_ENV === 'test') {
+  router.route('/deleteFeedbackAndComments').delete(controller.deleteFeedbackAndComments)
+}
+
 router.route('/:id')
   .get(checkIfUserIsAdmin, controller.read)
   .put(tokenExtractor, userExtractor, controller.update)

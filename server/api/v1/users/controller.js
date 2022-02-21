@@ -66,7 +66,10 @@ exports.update = async (req, res, next) => {
 }
 
 exports.delete = async (req, res, next) => {
-
+  const { id } = req.params
+  const data = await Model.findByIdAndDelete(id)
+  const success = req.t('user_delete_success')
+  res.status(200).json({ message: success, data })
 }
 
 exports.passwordReset = async (req, res, next) => {
@@ -75,4 +78,9 @@ exports.passwordReset = async (req, res, next) => {
 
 exports.passwordRecovery = async (req, res, next) => {
 
+}
+
+exports.deleteTestUser = async (req, res, next) => {
+  await Model.deleteMany({ username: /carlos/ })
+  res.status(200).json({ message: 'Test user deleted successfully' })
 }
