@@ -59,7 +59,7 @@ exports.userExtractor = async (req, res, next) => {
   const user = await User.findById({ _id: id })
   if (!user) {
     const message = req.t('user_not_found')
-    return res.status(404).send({ error: message })
+    return res.status(404).send({ message })
   } else {
     req.user = user
   }

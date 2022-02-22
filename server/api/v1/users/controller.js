@@ -11,6 +11,19 @@ exports.all = async (req, res, next) => {
   res.json({ data })
 }
 
+exports.profile = async (req, res, next) => {
+  const { token: { id } } = req
+  const user = await Model.findById({ _id: id })
+    .populate('comments')
+    .populate('submissions')
+  if (!user) {
+    const message = req.t('user_not_found')
+    return res.status(404).send({ message })
+  } else {
+    res.json({ data: user })
+  }
+}
+
 exports.read = async (req, res, next) => {
   const { params: { id } } = req
   const data = await Model.findById(id)
