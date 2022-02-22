@@ -3,7 +3,7 @@ const { tokenExtractor } = require('../../../middlewares')
 const controller = require('./controller')
 
 router.route('/')
-  .get(tokenExtractor, controller.all) // only admin=true, to be implemented
+  .get(controller.all) // only admin=true, to be implemented
   .post(controller.signup)
 
 if (process.env.NODE_ENV === 'test') {
