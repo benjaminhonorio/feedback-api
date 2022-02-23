@@ -75,14 +75,27 @@ exports.login = async (req, res, next) => {
 
 // TODO
 exports.update = async (req, res, next) => {
-
+  const { body, params: { id }, user } = req
+  if (id === user._id.toString()) {
+    const data = await Model.findByIdAndUpdate(id, body, { runValidators: true, new: true })
+    const message = req.t('feedback_update_success')
+    res.json({ message, data })
+  } else {
+    const message = req.t('not_allowed_user')
+    res.status(401).json({ message })
+  }
 }
 
 exports.delete = async (req, res, next) => {
-  const { id } = req.params
-  const data = await Model.findByIdAndDelete(id)
-  const success = req.t('user_delete_success')
-  res.status(200).json({ message: success, data })
+  const { user, params: { id } } = req
+  // TODO: the user itself  could delete its own account
+  if (user.admin) {
+    const data = await Model.findByIdAndDelete(id)
+    const success = req.t('user_delete_success')
+    res.status(200).json({ message: success, data })
+  }
+  const message = req.t('not_allowed_user')
+  res.status(401).json({ message })
 }
 
 exports.passwordReset = async (req, res, next) => {

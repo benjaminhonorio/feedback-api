@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { tokenExtractor } = require('../../../middlewares')
+const { tokenExtractor, userExtractor } = require('../../../middlewares')
 const controller = require('./controller')
 
 router.route('/')
@@ -18,10 +18,10 @@ router.route('/login')
 
 router.route('/:id')
   .get(tokenExtractor, controller.read) // I can get my submissions from here by populating them
-  .put(controller.update) // auth,
-  .delete(controller.delete) // auth,
+  .put(tokenExtractor, userExtractor, controller.update) // auth,
+  .delete(tokenExtractor, userExtractor, controller.delete) // auth,
 
-router.route('/:id/password_reset').put(controller.passwordReset) // auth,
-router.route('/:id/password_recovery').put(controller.passwordRecovery) // auth,
+// router.route('/:id/password_reset').put(controller.passwordReset) // auth,
+// router.route('/:id/password_recovery').put(controller.passwordRecovery) // auth,
 
 module.exports = router
