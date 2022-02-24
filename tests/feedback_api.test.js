@@ -197,11 +197,12 @@ describe('updating upvotes of a feedback submission by authenticated user', () =
     const { body: { data: feedbacktoUpvote } } = await request
       .post(FEEDBACK_ENDPOINT, newFeedback, token)
 
-    const { body: { data: updatedFeedback } } = await request
+    // const { body: { data: updatedFeedback } } =
+    await request
       .put(`${FEEDBACK_ENDPOINT}/${feedbacktoUpvote.id}`, { upvotes: 999 }, token)
-      .expect(200)
-      .expect('Content-Type', /application\/json/)
-    expect(updatedFeedback.upvotes).toBe(1)
+      .expect(400)
+      // .expect('Content-Type', /application\/json/)
+    // expect(updatedFeedback.upvotes).toBe(1)
   })
 })
 

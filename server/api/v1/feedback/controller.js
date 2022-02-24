@@ -43,9 +43,9 @@ exports.create = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   const { body, params: { id }, user } = req
+  delete body.upvotes
   const validationErrors = await validateFields(createEditFeedbackSchema, body)
   if (Object.keys(validationErrors).length) return res.status(400).json({ message: validationErrors })
-  delete body.upvotes
   const data = await Model.findById(id)
   const ownerId = user._id.toString()
   const creatorId = data.user.toString()
