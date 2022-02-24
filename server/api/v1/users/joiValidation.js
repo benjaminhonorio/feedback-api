@@ -31,8 +31,24 @@ const signupSchema = Joi.object({
 
 })
 
-const validateFields = async (obj) => {
-  const validation = await signupSchema.validate(obj, { abortEarly: false })
+const loginSchema = Joi.object({
+  username: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .required(),
+  password: Joi.string()
+    .min(6)
+    .max(30)
+    .pattern(/^[a-zA-Z0-9]{6,30}$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'password should contain numbers and letters only and should be between 6-30 characters long'
+    })
+})
+
+const validateFields = async (schema, obj) => {
+  const validation = await schema.validate(obj, { abortEarly: false })
   if (validation.error) {
     const errorDetails = validation.error.details
     const errorMessages = errorDetails.reduce((acc, err) => {
@@ -47,4 +63,4 @@ const validateFields = async (obj) => {
 //  const good = { username: 'mina', name: 'mina', lastname: 'honorio', email: 'mina@example.com', password: 'mina1234', passwordConfirmation: 'mina1234' }
 // const bad = { username: 'as', name: 'mxxa', lastname: '', email: 'minom', password: 'asd123', passwordConfirmation: 'mina1234' }
 
-module.exports = { signupSchema, validateFields }
+module.exports = { signupSchema, loginSchema, validateFields }

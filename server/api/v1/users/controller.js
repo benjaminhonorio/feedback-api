@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../../../config')
 const { welcomeEmail } = require('../../../../utils/mail/mail')
-const { validateFields } = require('./joiValidation')
+const { validateFields, signupSchema, loginSchema } = require('./joiValidation')
 
 exports.all = async (req, res, next) => {
   const filters = getFilters(req.query)
@@ -38,7 +38,7 @@ exports.read = async (req, res, next) => {
 
 exports.signup = async (req, res, next) => {
   const { body } = req
-  const validationErrors = await validateFields(body)
+  const validationErrors = await validateFields(signupSchema, body)
   if (Object.keys(validationErrors).length) return res.status(400).json({ message: validationErrors })
   const saltRounds = 10
   const hash = await bcrypt.hash(body.password, saltRounds)
@@ -59,6 +59,8 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   const { body } = req
+  const validationErrors = await validateFields(loginSchema, body)
+  if (Object.keys(validationErrors).length) return res.status(400).json({ message: validationErrors })
   const user = await Model.findOne({ username: body.username })
   const passwordCorrect =
     user === null ? false : await bcrypt.compare(body.password, user.passwordHash)
