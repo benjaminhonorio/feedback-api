@@ -5,7 +5,6 @@ const { Model: User } = require('../users/model')
 const { Model: Feedback } = require('../feedback/model')
 
 exports.all = async (req, res, next) => {
-  const { params } = req
   const data = await Model
     .find({})
     .sort('-createdAt')
