@@ -7,6 +7,7 @@ const { Model: User } = require('./server/api/v1/users/model')
 const { Model: Comment } = require('./server/api/v1/comment/model')
 const { Model: Feedback } = require('./server/api/v1/feedback/model')
 const jwt = require('jsonwebtoken')
+const { validateFields, createCommentSchema } = require('./server/joiValidation')
 
 const server = http.createServer(app)
 const io = new Server(server, {
@@ -65,7 +66,12 @@ io.on('connection', (socket, next) => {
   })
 
   socket.on('new-comment', async ({ feedbackId, user, content }) => {
+    console.log(content)
     const commenter = await User.findById(socket.userId)
+    const validationErrors = await validateFields(createCommentSchema, { content })
+    if (Object.keys(validationErrors).length) {
+      return io.to(feedbackId).emit('error_on_comment_creation', { user: commenter.username, message: validationErrors })
+    }
     const feedback = await Feedback.findById(feedbackId)
     const newComment = new Comment({ content, user: commenter._id, feedback: feedback._id })
     const data = await newComment.save()

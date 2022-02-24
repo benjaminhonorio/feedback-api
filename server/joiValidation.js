@@ -63,6 +63,13 @@ const createEditFeedbackSchema = Joi.object({
     .valid('', 'planned', 'in-progress', 'live')
 })
 
+const createCommentSchema = Joi.object({
+  content: Joi.string()
+    .min(1)
+    .max(250)
+    .required()
+})
+
 const validateFields = async (schema, obj) => {
   const validation = await schema.validate(obj, { abortEarly: false })
   if (validation.error) {
@@ -76,4 +83,4 @@ const validateFields = async (schema, obj) => {
   return {}
 }
 
-module.exports = { signupSchema, loginSchema, validateFields, createEditFeedbackSchema }
+module.exports = { signupSchema, loginSchema, validateFields, createEditFeedbackSchema, createCommentSchema }
