@@ -3,6 +3,7 @@ const { getFilters, getSortingParams } = require('../../../../utils')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../../../config')
+const { welcomeEmail } = require('../../../../utils/mail/mail')
 
 exports.all = async (req, res, next) => {
   const filters = getFilters(req.query)
@@ -46,6 +47,7 @@ exports.signup = async (req, res, next) => {
     passwordHash: hash
   })
   const newUser = await user.save()
+  welcomeEmail(newUser.username, newUser.email)
   const message = req.t('user_signup_success')
   res.status(201).json({ message, data: { username: newUser.username, name: newUser.name } })
 }
@@ -92,7 +94,7 @@ exports.delete = async (req, res, next) => {
   if (user.admin) {
     const data = await Model.findByIdAndDelete(id)
     const success = req.t('user_delete_success')
-    res.status(200).json({ message: success, data })
+    return res.status(200).json({ message: success, data })
   }
   const message = req.t('not_allowed_user')
   res.status(401).json({ message })

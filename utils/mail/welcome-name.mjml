@@ -1,0 +1,90 @@
+<mjml>
+  <mj-head>
+    <mj-title>Hello world</mj-title>
+    <mj-font
+      name="Josefin Sans"
+      href="https://fonts.googleapis.com/css?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700"
+    ></mj-font>
+    <mj-attributes>
+      <mj-all font-family="Josefin Sans, Helvetica, sans-serif"></mj-all>
+      <mj-text
+        font-weight="400"
+        font-size="16px"
+        color="#616161"
+        line-height="24px"
+      ></mj-text>
+      <mj-section padding="0px"></mj-section>
+    </mj-attributes>
+  </mj-head>
+  <mj-body>
+    <mj-section padding="20px 0"> </mj-section>
+    <mj-section>
+      <mj-column width="100%">
+        <mj-image
+          href="https://recast.ai?ref=newsletter"
+          src="https://res.cloudinary.com/dygam4vhf/image/upload/v1645657335/5ffe0b19d379a_k8dmwn.png"
+        ></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column width="45%">
+        <mj-text
+          align="center"
+          font-weight="700"
+          padding="0px"
+          font-size="24px"
+          line-height="32px"
+          >Welcome {{name}}!</mj-text
+        >
+        <mj-divider border-width="2px" border-color="#616161"></mj-divider>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column width="100%">
+        <mj-text>
+          <p>
+            Thanks for joining the
+            <strong>Make It Real Feedback Board</strong> and helping us build a
+            better application for you!
+          </p>
+          <p>
+            Start sending your suggestions or comment others so we can take note
+            and make them real. See you <a href="{{app_url}}">there!</a>
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column width="11%">
+        <mj-image
+          padding-right="0px"
+          padding-left="25px"
+          align="left"
+          width="70px"
+          border-radius="50%"
+          href="#"
+          src="https://res.cloudinary.com/dygam4vhf/image/upload/v1645664229/IMG_20210828_1050255_wuzwen.jpg"
+        ></mj-image>
+      </mj-column>
+      <mj-column width="89%">
+        <mj-text padding="0 25px">
+          <p style="color: #bdbdbd; line-height: 9px">
+            {{sender}} -
+            <a href="{{company_url}}" style="color: #3498db">
+              Make It Real
+            </a>
+            team
+          </p>
+          <p style="font-style: italic; color: #bdbdbd; line-height: 9px">
+            Your light in the storm
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column width="100%">
+        <mj-divider border-width="1px" border-color="#E0E0E0"></mj-divider>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
