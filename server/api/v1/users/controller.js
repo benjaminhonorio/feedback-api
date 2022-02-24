@@ -47,7 +47,9 @@ exports.signup = async (req, res, next) => {
     passwordHash: hash
   })
   const newUser = await user.save()
-  welcomeEmail(newUser.username, newUser.email)
+  if (process.env.NODE_ENV === 'production') {
+    welcomeEmail(newUser.username, newUser.email)
+  }
   const message = req.t('user_signup_success')
   res.status(201).json({ message, data: { username: newUser.username, name: newUser.name } })
 }
