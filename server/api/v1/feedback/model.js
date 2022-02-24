@@ -10,14 +10,14 @@ const modelFields = {
     type: String,
     required: true,
     maxLength: 75,
-    minLength: 15,
+    minLength: 10,
     trim: true
   },
   description: {
     type: String,
     required: true,
     maxLength: 125,
-    minLength: 15,
+    minLength: 10,
     trim: true
   },
   upvotes: {

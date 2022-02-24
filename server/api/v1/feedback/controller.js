@@ -2,6 +2,7 @@ const { getFilters, getSortingParams } = require('../../../../utils')
 const { Model, modelFields } = require('./model')
 const { Model: User } = require('../users/model')
 const { Model: Comment } = require('../comment/model')
+const { validateFields, createEditFeedbackSchema } = require('../../../joiValidation')
 
 exports.all = async (req, res, next) => {
   const filters = getFilters(req.query)
@@ -29,6 +30,8 @@ exports.read = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   const { body, user } = req
+  const validationErrors = await validateFields(createEditFeedbackSchema, body)
+  if (Object.keys(validationErrors).length) return res.status(400).json({ message: validationErrors })
   const creator = await User.findById(user.id)
   const doc = new Model({ ...body, user: creator._id })
   const data = await doc.save()
@@ -40,6 +43,8 @@ exports.create = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   const { body, params: { id }, user } = req
+  const validationErrors = await validateFields(createEditFeedbackSchema, body)
+  if (Object.keys(validationErrors).length) return res.status(400).json({ message: validationErrors })
   delete body.upvotes
   const data = await Model.findById(id)
   const ownerId = user._id.toString()

@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../../../config')
 const { welcomeEmail } = require('../../../../utils/mail/mail')
-const { validateFields, signupSchema, loginSchema } = require('./joiValidation')
+const { validateFields, signupSchema, loginSchema } = require('../../../joiValidation')
 
 exports.all = async (req, res, next) => {
   const filters = getFilters(req.query)

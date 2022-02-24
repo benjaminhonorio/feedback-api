@@ -47,6 +47,22 @@ const loginSchema = Joi.object({
     })
 })
 
+const createEditFeedbackSchema = Joi.object({
+  title: Joi.string()
+    .min(10)
+    .max(75)
+    .required(),
+  tag: Joi.string()
+    .valid('ui', 'ux', 'enhancement', 'bug', 'feature')
+    .required(),
+  description: Joi.string()
+    .min(10)
+    .max(125)
+    .required(),
+  status: Joi.string()
+    .valid('', 'planned', 'in-progress', 'live')
+})
+
 const validateFields = async (schema, obj) => {
   const validation = await schema.validate(obj, { abortEarly: false })
   if (validation.error) {
@@ -60,7 +76,4 @@ const validateFields = async (schema, obj) => {
   return {}
 }
 
-//  const good = { username: 'mina', name: 'mina', lastname: 'honorio', email: 'mina@example.com', password: 'mina1234', passwordConfirmation: 'mina1234' }
-// const bad = { username: 'as', name: 'mxxa', lastname: '', email: 'minom', password: 'asd123', passwordConfirmation: 'mina1234' }
-
-module.exports = { signupSchema, loginSchema, validateFields }
+module.exports = { signupSchema, loginSchema, validateFields, createEditFeedbackSchema }
