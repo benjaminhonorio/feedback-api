@@ -5,19 +5,19 @@ const modelFields = {
   username: {
     type: String,
     required: true,
-    min: 6,
+    min: 3,
     max: 30
   },
   name: {
     type: String,
     required: true,
-    min: 6,
+    min: 3,
     max: 30
   },
   lastname: {
     type: String,
     required: true,
-    min: 6,
+    min: 3,
     max: 30
   },
   // To keep it simple, later I can add this stuff

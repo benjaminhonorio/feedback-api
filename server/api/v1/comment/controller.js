@@ -6,7 +6,6 @@ const { Model: Feedback } = require('../feedback/model')
 
 exports.all = async (req, res, next) => {
   const { params } = req
-  console.log(params)
   const data = await Model
     .find({})
     .sort('-createdAt')
@@ -21,7 +20,6 @@ exports.create = async (req, res, next) => {
   const feedback = await Feedback.findById(feedbackId)
   const doc = new Model({ ...body, user: commenter._id, feedback: feedback._id })
   const data = await doc.save()
-  console.log(data)
   feedback.comments = feedback.comments.concat(data._id)
   commenter.comments = commenter.comments.concat(data._id)
   await commenter.save()
