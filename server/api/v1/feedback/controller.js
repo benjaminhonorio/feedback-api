@@ -66,9 +66,10 @@ exports.delete = async (req, res, next) => {
   const creatorId = data.user.toString()
   if (ownerId === creatorId || user.admin === true) {
     const data = await Model.findByIdAndDelete(id)
+    await Comment.deleteMany({ _id: { $in: data.comments } })
     const creator = await User.findByIdAndUpdate(
       user.admin ? data.user : user._id,
-      { $pull: { submissions: data._id } },
+      { $pull: { submissions: data._id }, $pullAll: { comments: data.comments } },
       { new: true })
     await creator.save()
     const message = req.t('feedback_deletion_success')

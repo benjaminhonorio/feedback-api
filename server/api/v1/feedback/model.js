@@ -38,12 +38,12 @@ const modelFields = {
     type: String,
     required: true,
     enum: config.TAGS_OPTIONS
+  },
+  commentsCount: {
+    type: Number,
+    default: 0,
+    min: 0
   }
-  // commentsCount: {
-  //   type: Number,
-  //   default: 0,
-  //   min: 0
-  // }
 
 }
 

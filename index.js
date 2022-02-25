@@ -26,17 +26,17 @@ const jwtMiddleware = async (socket, next) => {
       socket.userId = decodedToken.id
       const user = await User.findById({ _id: decodedToken.id })
       if (user.admin) {
-        socket.userIsAdmin = true
+        socket.username = user.username
         return next()
       }
-      socket.userIsAdmin = false
+      socket.username = null
       next()
     } catch (error) {
       const message = `Error: ${error?.message}`
       logger.error(message)
     }
   } else {
-    socket.userIsAdmin = false
+    socket.username = null
     next()
   }
 }
@@ -56,7 +56,7 @@ io.on('connection', (socket, next) => {
       .populate('user', { username: 1, name: 1 })
       .populate({ path: 'comments', populate: { path: 'user', select: 'username name lastname thumbnail' } })
     io.to(feedbackId).emit('receive-feedback', {
-      feedback, user: socket.userIsAdmin
+      feedback, user: socket.username
     })
   })
 
@@ -66,7 +66,6 @@ io.on('connection', (socket, next) => {
   })
 
   socket.on('new-comment', async ({ feedbackId, user, content }) => {
-    console.log(content)
     const commenter = await User.findById(socket.userId)
     const validationErrors = await validateFields(createCommentSchema, { content })
     if (Object.keys(validationErrors).length) {
@@ -79,7 +78,7 @@ io.on('connection', (socket, next) => {
     commenter.comments = commenter.comments.concat(data._id)
     await commenter.save()
     await feedback.save()
-    const updatedFeedback = await Feedback.findById(feedback._id)
+    const updatedFeedback = await Feedback.findByIdAndUpdate(feedback._id, { $inc: { commentsCount: 1 } })
       .populate({ path: 'comments', populate: { path: 'user', select: 'username name lastname thumbnail' } })
     io.to(feedbackId).emit('receive-comment', {
       comments: updatedFeedback.comments
@@ -89,7 +88,7 @@ io.on('connection', (socket, next) => {
   socket.on('delete-comment', async ({ commentId }) => {
     const comment = await Comment.findByIdAndDelete(commentId)
     const feedback = await Feedback.findByIdAndUpdate(comment.feedback,
-      { $pull: { comments: comment._id } },
+      { $pull: { comments: comment._id }, $inc: { commentsCount: -1 } },
       { new: true })
     const creator = await User.findByIdAndUpdate(comment.user,
       { $pull: { comments: comment._id } },
